@@ -2,14 +2,18 @@ require 'sinatra'
 require 'haml'
 require 'yaml'
 require './src/tools.rb'
+require './src/user.rb'
 
 set :views, File.dirname(__FILE__) + "/views"
 set :public_folder, File.dirname(__FILE__) + '/resources'
 
 post '/' do
-  @login = params[:login]
-  @pass = params[:mdp]
-  conf_ae = Tools::load_config("ae")
+  user = User.new(params[:login], params[:mdp])
+  if user.connected?
+    data = user.getData(:all)
+  else
+    #TODO show error message
+  end
 end
 
 get '/' do
