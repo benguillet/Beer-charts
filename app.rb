@@ -1,7 +1,6 @@
 require 'sinatra'
 require 'haml'
 require 'yaml'
-require './src/tools.rb'
 require './src/user.rb'
 
 set :views, File.dirname(__FILE__) + "/views"
