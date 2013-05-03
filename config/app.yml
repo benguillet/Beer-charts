@@ -1,3 +1,11 @@
-ae:
-  base_url:        'http://ae.utbm.fr/'
-  connection_url : 'http://ae.utbm.fr/connect.php'
+url:
+  base:    'http://ae.utbm.fr/'
+  connect: 'http://ae.utbm.fr/connect.php'
+  compte:  'http://ae.utbm.fr/user/compteae.php'
+
+form:
+  domain: 'utbm'
+  btn:    'Se connecter'
+
+cookies:
+  auth_cookie: 'AE2_SESS_ID'
