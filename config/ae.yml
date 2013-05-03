@@ -1,0 +1,3 @@
+ae:
+  base_url:        'http://ae.utbm.fr/'
+  connection_url : 'http://ae.utbm.fr/connect.php'
