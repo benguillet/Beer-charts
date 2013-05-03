@@ -1,16 +1,18 @@
 !!!
 %html 
   %head  
+    %link(rel="stylesheet" type="text/css" href="css/bootstrap.css")
     %link(rel="stylesheet" type="text/css" href="css/main.css")
-    %title My Sinatra Website  
+    %title Ae charts  
   %body
-    %h1 Welcome
-    %form{:action => "/", :method => "post" }
-      %ul
-        %li
-          %label{:for => "login"} Login:
-          %input{:type => "text", :name => "login", :class => "text" }
-        %li
-          %label{:for => "mdp"} Mdp:
-          %input{:type => "text", :name => "mdp", :class => "text" }
-      %input{:type => "submit", :value => "Send", :class => "button" }
+    %div{:class => "container"}
+      %div{:class => "well span3 offset3"}
+        %form{:action => "/", :method => "post" }
+          
+          %input{:type  => "text", :name => "login", 
+                 :class => "span3", :placeholder => "Login" }
+                   
+          %input{:type => "password", :name => "mdp",   
+                 :class => "span3",    :placeholder => "password" }
+
+          %input{:type => "submit",   :value => "Send", :class => "btn btn-success" }
