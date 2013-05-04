@@ -11,7 +11,7 @@ set :public_folder, File.dirname(__FILE__) + '/resources'
 post '/data' do
   user = User.new(params[:login], params[:mdp])
   if user.connected?
-    data = user.getData(:all).to_json
+    user.getData(:all).to_json
   else
     {'error' => 'Une erreur est survenue !'}.to_json
   end
