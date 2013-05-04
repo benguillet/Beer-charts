@@ -3,9 +3,6 @@
   %head  
     %link(rel="stylesheet" type="text/css" href="css/bootstrap.css")
     %link(rel="stylesheet" type="text/css" href="css/main.css")
-    %scripts{:type => "text/javascript", 
-             :src => "//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" }
-    %scripts{:type => "text/javascript", :src => "js/main.js" }
     %title Ae charts  
   %body
     %div{:class => "container"}
@@ -24,6 +21,15 @@
           -if not locals[:error].nil?
             %H4 #{locals[:error]}
 
-  -if not locals[:data].nil?
-    :javascript
-      var data = #{locals[:data]}
+
+    %script{:type => "text/javascript", 
+          :src => "//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" }  
+    %script{:type => "text/javascript", :src => "https://www.google.com/jsapi" }
+    %script{:type => "text/javascript", :src => "js/main.js" }                         
+       
+    -if not locals[:data].nil?
+      :javascript
+        var data = #{locals[:data]}
+    -else
+      :javascript
+        var data;

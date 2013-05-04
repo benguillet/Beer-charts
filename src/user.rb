@@ -51,6 +51,7 @@ class User
     res  = http.get(urls['compte'], @headers) 
     data = Array.new 
     doc  = Nokogiri::HTML(res.body)
+
     doc.xpath('//table[1]/tr[position()>1]').each do |node|
       data << { 'date' => node.children[0].content.delete(' '),
                 'out'  => node.children[2].content,
