@@ -1,5 +1,6 @@
-Work in progress.
-You need prenom.nom login for now.
+- Work in progress.
+- Must have a prenom.nom login (for now).
+- Nothing is saved anywhere (even the cookie), it's on purpose.
 
 ## Done
 Monthly expense:
