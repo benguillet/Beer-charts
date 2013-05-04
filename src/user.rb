@@ -1,4 +1,5 @@
 require 'net/http'
+require 'nokogiri'
 
 class User
 
@@ -36,9 +37,8 @@ class User
   end
 
   def connected?
-    return true
     config_cookie = Tools::load_config('cookies');
-    @cookies.include? config_cookie['auth_cookie']
+    @headers['Cookie'].include? config_cookie['auth_cookie']
   end
 
   def getData criteria
