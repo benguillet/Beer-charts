@@ -1,6 +1,8 @@
 require 'sinatra'
 require 'haml'
 require 'yaml'
+require 'json'
+require './src/tools.rb'
 require './src/user.rb'
 
 set :views, File.dirname(__FILE__) + "/views"
@@ -9,7 +11,7 @@ set :public_folder, File.dirname(__FILE__) + '/resources'
 post '/' do
   user = User.new(params[:login], params[:mdp])
   if user.connected?
-    data = user.getData(:all)
+    user.getData(:all).to_json
   else
     #TODO show error message
   end

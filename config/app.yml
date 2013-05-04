@@ -1,7 +1,7 @@
 url:
-  base:    'http://ae.utbm.fr/'
-  connect: 'http://ae.utbm.fr/connect.php'
-  compte:  'http://ae.utbm.fr/user/compteae.php'
+  base:    'ae.utbm.fr'
+  connect: '/connect.php'
+  compte:  '/user/compteae.php'
 
 form:
   domain: 'utbm'
