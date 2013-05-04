@@ -46,9 +46,17 @@ class User
   end
 
   def getMonthlyBalance
-    #urls = Tools::load_config('url')
-    #http = Net::HTTP.new(urls['base'], 80)
-    #res  = http.get(urls['compte'], @headers) 
+    urls  = Tools::load_config('url')
+    http = Net::HTTP.new(urls['base'], 80)
+    res  = http.get(urls['compte'], @headers) 
+    data = Array.new 
+    doc  = Nokogiri::HTML(res.body)
+    doc.xpath('//table[1]/tr[position()>1]').each do |node|
+      data << { 'date' => node.children[0].content.delete(' '),
+                'out'  => node.children[2].content,
+                'in'   => node.children[4].content }
+    end
+    return data
   end
   
 end
