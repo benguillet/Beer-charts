@@ -11,3 +11,17 @@
 H1 {
   margin-bottom: 20px;
 }
+
+#depenses-btn {
+  position:relative;
+  z-index:2;
+  top:50px;
+  left:40px;
+}
+
+#rechargements-btn {
+  position:relative;
+  z-index:2;
+  top:50px;
+  left:50px
+}

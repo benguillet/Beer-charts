@@ -5,17 +5,32 @@ $(window).ready(function () {
 var APP = {
 
   cookie : null,
-  data   : null,
+  data   : [],
 
   init : function() {
+    APP.initlistener();
     APP.loadMonthlyBalance();
+  },
+
+  initlistener: function() {
+    $('#rechargements-btn').click(function() {
+      VIEW.drawMonthlyBalance('rechargements');
+      $(this).addClass('btn-success');
+      $('#depenses-btn').removeClass('btn-success');
+    });
+
+    $('#depenses-btn').click(function() {
+      VIEW.drawMonthlyBalance('depenses');
+      $(this).addClass('btn-success');
+      $('#rechargements-btn').removeClass('btn-success');
+    });
   },
 
   loadMonthlyBalance: function() {
     $.post("/get/montly", { cookie: APP.cookie })
       .done(function(data) {
-        data = JSON.parse(data);
-        VIEW.drawMonthlyBalance(data);
+        APP.data['monthly'] = JSON.parse(data).reverse();
+        VIEW.drawMonthlyBalance('depenses');
       }
     );
   },
@@ -24,13 +39,18 @@ var APP = {
 
 var VIEW = {
 
-  drawMonthlyBalance: function(data) {
+  drawMonthlyBalance: function(type) {
     var gdata = new google.visualization.DataTable();   
     gdata.addColumn('string', 'Date');
     gdata.addColumn('number', 'Euro');
-    data = data.reverse();
+
+    data = APP.data['monthly']
     $.each(data, function(index, value) {
-      gdata.addRow([value.date, parseInt(value.out)])
+      if (type == 'depenses') {
+        gdata.addRow([value.date, parseInt(value.out)])
+      } else {
+        gdata.addRow([value.date, parseInt(value.in)])
+      }
     });
     var options = { 
                     'width'           : '100%', 

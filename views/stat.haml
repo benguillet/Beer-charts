@@ -8,11 +8,16 @@
   %body
     %div{:class => "container"}
       %H1 Statistique AE
+
       %div{:class => "row"}
+        %button{:class => "btn btn-success", :id => "depenses-btn" }      Dépenses
+        %button{:class => "btn",             :id => "rechargements-btn"}  Rechargements
         %div{:class => "well span12", :id => "monthly_balance", :style => "min-height:500px" }
+
       %div{:class => "row"}
         %div{:class => "well span6", :id => "top_beer", :style => "min-height:200px" }
         %div{:class => "well span6", :id => "top_food", :style => "min-height:200px" }
+
       %div{:class => "row"}
         %div{:class => "well span6", :id => "top_idk", :style => "min-height:200px" }
         %div{:class => "well span6", :id => "top_idkother", :style => "min-height:200px" }
