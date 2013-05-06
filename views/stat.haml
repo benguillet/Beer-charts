@@ -1,0 +1,25 @@
+!!!
+%html 
+  %head  
+    %link(rel="stylesheet" type="text/css" href="css/bootstrap.css")
+    %link(rel="stylesheet" type="text/css" href="css/main.css")
+    %title Ae charts  
+  %body
+    %div{:class => "container"}
+      %H1 Statistique AE
+      %div{:class => "row"}
+        %div{:class => "well span12", :id => "monthly_balance", :style => "min-height:500px" }
+      %div{:class => "row"}
+        %div{:class => "well span6", :id => "top_beer", :style => "min-height:200px" }
+        %div{:class => "well span6", :id => "top_food", :style => "min-height:200px" }
+      %div{:class => "row"}
+        %div{:class => "well span6", :id => "top_idk", :style => "min-height:200px" }
+        %div{:class => "well span6", :id => "top_idkother", :style => "min-height:200px" }
+
+  %script{:type => "text/javascript",
+          :src => "//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" }
+  %script{:type => "text/javascript", :src => "https://www.google.com/jsapi" }
+  %script{:type => "text/javascript", :src => "js/main.js" }
+
+  :javascript
+    APP.cookie = '#{cookie}';

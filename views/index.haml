@@ -6,7 +6,7 @@
     %title Ae charts  
   %body
     %div{:class => "container"}
-      -if locals[:logged] == false
+      %form{:actio  => '/', :method => "post"}
         %div{:class => "row well span4 offset3"}
 
           %input{:type  => "text",  :name => "login", 
@@ -20,8 +20,3 @@
         %div{:class => "row span4 offset3"}
           -if not locals[:error].nil?
             %H4 #{locals[:error]}
-
-    %script{:type => "text/javascript",
-            :src => "//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" }
-    %script{:type => "text/javascript", :src => "https://www.google.com/jsapi" }
-    %script{:type => "text/javascript", :src => "js/main.js" }

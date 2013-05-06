@@ -8,17 +8,24 @@ require './src/user.rb'
 set :views, File.dirname(__FILE__) + "/views"
 set :public_folder, File.dirname(__FILE__) + '/resources'
 
-post '/data' do
+post '/' do
   user = User.new(params[:login], params[:mdp])
   if user.connected?
-    user.getData(:all).to_json
+    haml :stat, :locals => { :cookie => user.cookie }
   else
-    {'error' => 'Une erreur est survenue !'}.to_json
+    haml :index, :locals => { :error => 'Une erreur est survenue !' }
   end
 end
 
+post '/get/montly' do
+  user = User.initByCookie(params[:cookie])
+  if user.connected?
+    user.getMonthlyBalance().to_json
+  end
+end 
+
 get '/' do
-  haml :index, :locals => { :logged => false }
+  haml :index
 end
 
 not_found do  

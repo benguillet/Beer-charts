@@ -3,12 +3,20 @@ require 'nokogiri'
 
 class User
 
-  @headers = nil
-
   def initialize(login, password)
     @login = login
     @password = password
     connection!
+  end
+
+  def self.initByCookie cookie
+    user = User.new(nil, nil)
+    user.setCookie(cookie)
+    return user
+  end
+
+  def setCookie cookie
+    @headers = { 'Cookie' => cookie }
   end
 
   def connection!
@@ -39,6 +47,10 @@ class User
   def connected?
     config_cookie = Tools::load_config('cookies');
     @headers['Cookie'].include? config_cookie['auth_cookie']
+  end
+
+  def cookie
+    @headers['Cookie']
   end
 
   def getData criteria
