@@ -1,0 +1,13 @@
+.well {
+  padding :0;
+}
+
+[class*="span"] {
+  float: left;
+  min-height: 1px;
+  margin-left: 18px;
+}
+
+H1 {
+  margin-bottom: 20px;
+}
