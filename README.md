@@ -1,10 +1,9 @@
 - Work in progress.
-- Must have a prenom.nom login (for now).
-- Nothing is saved anywhere (even the cookie), it's on purpose.
+- prenom.nom login is required (for now).
 
 ## Done
-Monthly expense:
-![ScreenShot](http://s16.postimg.org/vb1pb38v9/Screen_Shot_2013_05_04_at_17_19_20.png)
+Monthly in/out :
+![ScreenShot](http://image.bayimg.com/c54312cfc1f8e0f4297c2bd598c2b7302bbfec5a.jpg)
 
 ## TODO
 All the beers charts.
