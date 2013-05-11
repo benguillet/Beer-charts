@@ -78,6 +78,32 @@ var VIEW = {
 
   drawAllMonth: function () {
     VIEW.drawDepenseHorraire();
+    VIEW.drawTopConsommation();
+  },
+
+  drawTopConsommation: function() {
+
+    var conso = {}
+    data = APP.data['all'];
+    $.each(data, function(index, value) {
+      if (conso[value.name] == undefined) {
+        conso[value.name] = 0;
+      }
+      conso[value.name] += parseInt(value.qte);
+    }); 
+
+    var sortable = [];
+    for (var con in conso)
+      sortable.push([con, conso[con]])
+    sortable.sort(function(a, b) {return b[1] - a[1]})
+
+    $('#top_conso').empty();
+    $('#top_conso').append('<h4>Top 10</h4><br/>')
+    $.each(sortable, function(index, value) {
+      $('#top_conso').append('<h5>('+value[1]+') '+value[0]+'</h5>')
+      return index < 10;
+    });
+    
   },
 
   drawDepenseHorraire: function() {
@@ -102,8 +128,7 @@ var VIEW = {
     });
 
     $.each(wtfJavascript(times).sort(), function(index, value) {
-      console.log(value);
-      gdata.addRow([value[0], Math.floor(value[1])])
+      gdata.addRow([value[0]+"h", Math.floor(value[1])])
     });
 
     var options = { 
@@ -116,7 +141,6 @@ var VIEW = {
     chart.draw(gdata, options);
 
   }
-
 
 }
 
