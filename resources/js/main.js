@@ -79,6 +79,30 @@ var VIEW = {
   drawAllMonth: function () {
     VIEW.drawDepenseHorraire();
     VIEW.drawTopConsommation();
+    VIEW.drawTopBarman();
+  },
+
+  drawTopBarman: function() {
+    var conso = {}
+    data = APP.data['all'];
+    $.each(data, function(index, value) {
+      if (conso[value.vendeur] == undefined) {
+        conso[value.vendeur] = 0;
+      }
+      conso[value.vendeur] += 1;
+    }); 
+
+    var sortable = [];
+    for (var con in conso)
+      sortable.push([con, conso[con]])
+    sortable.sort(function(a, b) {return b[1] - a[1]})
+
+    $('#top_barman').empty();
+    $('#top_barman').append('<h4>Top 10 barman</h4><br/>')
+    $.each(sortable, function(index, value) {
+      $('#top_barman').append('<h5>('+value[1]+') '+value[0]+'</h5>')
+      return index < 9;
+    }); 
   },
 
   drawTopConsommation: function() {
@@ -101,9 +125,9 @@ var VIEW = {
     $('#top_conso').append('<h4>Top 10</h4><br/>')
     $.each(sortable, function(index, value) {
       $('#top_conso').append('<h5>('+value[1]+') '+value[0]+'</h5>')
-      return index < 10;
+      return index < 9;
     });
-    
+
   },
 
   drawDepenseHorraire: function() {

@@ -28,6 +28,10 @@
   left:40px;
 }
 
+h4, h5 {
+  margin-left:50px;
+}
+
 #rechargements-btn {
   position:relative;
   z-index:2;
