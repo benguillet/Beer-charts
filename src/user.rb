@@ -62,7 +62,7 @@ class User
 
     data = Array.new 
     months.each do |month|
-      url  = urls['month'] + months[0].split("/").reverse().join("")
+      url  = urls['month'] + month.split("/").reverse().join("")
       res  = http.get(url, @headers) 
       doc  = Nokogiri::HTML(res.body)
       doc.xpath('//table[1]/tr[position()>1]').each do |node|
