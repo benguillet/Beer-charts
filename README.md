@@ -1,9 +1,7 @@
 - Work in progress.
 - prenom.nom login is required (for now).
 
-## Done
-Monthly in/out :
-![ScreenShot](http://image.bayimg.com/c54312cfc1f8e0f4297c2bd598c2b7302bbfec5a.jpg)
+## Screen
 
-## TODO
-All the beers charts.
+![ScreenShot](http://image.bayimg.com/d453ce70ed0bb791f5a9534eae487ee4b8841da9.jpg)
+
