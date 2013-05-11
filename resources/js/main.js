@@ -98,7 +98,7 @@ var VIEW = {
     sortable.sort(function(a, b) {return b[1] - a[1]})
 
     $('#top_barman').empty();
-    $('#top_barman').append('<h4>Top 10 barman</h4><br/>')
+    $('#top_barman').append('<h4>Top 10 barmans</h4><br/>')
     $.each(sortable, function(index, value) {
       $('#top_barman').append('<h5>('+value[1]+') '+value[0]+'</h5>')
       return index < 9;
@@ -122,7 +122,7 @@ var VIEW = {
     sortable.sort(function(a, b) {return b[1] - a[1]})
 
     $('#top_conso').empty();
-    $('#top_conso').append('<h4>Top 10</h4><br/>')
+    $('#top_conso').append('<h4>Top 10 consommables</h4><br/>')
     $.each(sortable, function(index, value) {
       $('#top_conso').append('<h5>('+value[1]+') '+value[0]+'</h5>')
       return index < 9;
