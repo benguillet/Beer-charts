@@ -9,12 +9,8 @@
 }
 
 .loader {
-  position:absolute;
-  top:0;
-  bottom:0;
-  margin:auto;
-  left:0;
-  right:0; 
+  margin-left:30%;
+  margin-top:50px;
 }
 
 #page-title {

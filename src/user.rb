@@ -53,8 +53,29 @@ class User
     @headers['Cookie']
   end
 
-  def getData criteria
-    return getMonthlyBalance
+  def getAllData data
+    months = Array.new
+    data.each_value { |month| months.push month["date"] }
+
+    urls  = Tools::load_config('url')
+    http = Net::HTTP.new(urls['base'], 80)
+
+    data = Array.new 
+    months.each do |month|
+      url  = urls['month'] + months[0].split("/").reverse().join("")
+      res  = http.get(url, @headers) 
+      doc  = Nokogiri::HTML(res.body)
+      doc.xpath('//table[1]/tr[position()>1]').each do |node|
+        data << { "month"   => month,
+                  "time"    => node.children[2].content,
+                  "name"    => node.children[4].content,
+                  "lieu"    => node.children[6].content,
+                  "vendeur" => node.children[8].content,
+                  "qte"     => node.children[12].content,
+                  "prix"    => node.children[14].content }
+      end
+    end
+    return data
   end
 
   def getMonthlyBalance

@@ -1,7 +1,8 @@
 url:
-  base:    'ae.utbm.fr'
+  base:    '193.48.231.30'
   connect: '/connect.php'
   compte:  '/user/compteae.php'
+  month:   '/user/compteae.php?page=AE&month='
 
 form:
   domain: 'utbm'

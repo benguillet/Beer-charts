@@ -11,9 +11,14 @@
         %h1{:class => "pull-left", :id => "page-title" } Statistique AE
         %img{:class => "pull-right", :src => "images/ae.jpg"}
       %div{:class => "row"}
-        %button{:class => "btn btn-success", :id => "depenses-btn" }      Dépenses
-        %button{:class => "btn",             :id => "rechargements-btn"}  Rechargements
+        %button{:class => "btn btn-success", :id => "depenses-btn" }      Dépenses mensuel
+        %button{:class => "btn",             :id => "rechargements-btn"}  Rechargements mensuel
         %div{:class => "well span12", :id => "monthly_balance", :style => "min-height:500px" }
+          %img{:class => "loader", :src => "images/loader-big.gif"}
+
+      %div{:class => "row"}
+        %h4{:class => "btn btn-success", :id => "depenses-btn" } Dépense horraire
+        %div{:class => "well span12", :id => "depense_horraire", :style => "min-height:500px" }
           %img{:class => "loader", :src => "images/loader-big.gif"}
 
       %div{:class => "row"}

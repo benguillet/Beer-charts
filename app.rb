@@ -24,6 +24,13 @@ post '/get/montly' do
   end
 end 
 
+post '/get/all' do
+  user = User.initByCookie(params[:cookie])
+  if user.connected?
+    user.getAllData(params[:data]).to_json
+  end
+end
+
 get '/' do
   haml :index
 end
