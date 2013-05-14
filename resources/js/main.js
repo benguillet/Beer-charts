@@ -59,17 +59,13 @@ var VIEW = {
 
     data = APP.data['monthly']
     $.each(data, function(index, value) {
-      if (type == 'depenses') {
-        gdata.addRow([value.date, parseInt(value.out)])
-      } else {
-        gdata.addRow([value.date, parseInt(value.in)])
-      }
+      var aux = type == 'depenses' ? value.out : value.in;
+      gdata.addRow([value.date, parseInt(aux)])
     });
-    var options = { 
-                    'width'           : '100%', 
+
+    var options = { 'width'           : '100%', 
                     'height'          : '500', 
-                    'backgroundColor' : { fill:'transparent' } 
-                  };
+                    'backgroundColor' : { fill:'transparent' }};
 
     var chart = new google.visualization.AreaChart($('#monthly_balance')[0]); 
     chart.draw(gdata, options);
@@ -83,51 +79,41 @@ var VIEW = {
   },
 
   drawTopBarman: function() {
-    var conso = {}
+    var barmans = [];
     data = APP.data['all'];
     $.each(data, function(index, value) {
-      if (conso[value.vendeur] == undefined) {
-        conso[value.vendeur] = 0;
+      if (barmans[value.vendeur] == undefined) {
+        barmans[value.vendeur] = 1;
+      } else {
+        barmans[value.vendeur] += 1;
       }
-      conso[value.vendeur] += 1;
     }); 
-
-    var sortable = [];
-    for (var con in conso)
-      sortable.push([con, conso[con]])
-    sortable.sort(function(a, b) {return b[1] - a[1]})
 
     $('#top_barman').empty();
     $('#top_barman').append('<h4>Top 10 barmans</h4><br/>')
-    $.each(sortable, function(index, value) {
-      $('#top_barman').append('<h5>('+value[1]+') '+value[0]+'</h5>')
-      return index < 9;
-    }); 
+    Tools.bySortedValues(barmans, function(index, key, value) {
+      $('#top_barman').append('<h5>('+value+') '+key+'</h5>')
+      if (index >= 9) return true;
+    });
   },
 
   drawTopConsommation: function() {
-
-    var conso = {}
+    var conso = []
     data = APP.data['all'];
     $.each(data, function(index, value) {
       if (conso[value.name] == undefined) {
-        conso[value.name] = 0;
+        conso[value.name] = 1;
+      } else {
+        conso[value.name] += parseInt(value.qte);
       }
-      conso[value.name] += parseInt(value.qte);
-    }); 
-
-    var sortable = [];
-    for (var con in conso)
-      sortable.push([con, conso[con]])
-    sortable.sort(function(a, b) {return b[1] - a[1]})
+    });
 
     $('#top_conso').empty();
     $('#top_conso').append('<h4>Top 10 consommables</h4><br/>')
-    $.each(sortable, function(index, value) {
-      $('#top_conso').append('<h5>('+value[1]+') '+value[0]+'</h5>')
-      return index < 9;
+    Tools.bySortedValues(conso, function(index, key, value) {
+      $('#top_conso').append('<h5>('+value+') '+key+'</h5>')
+      if (index >= 9) return true;
     });
-
   },
 
   drawDepenseHorraire: function() {
@@ -136,46 +122,59 @@ var VIEW = {
     gdata.addColumn('string', 'Date');
     gdata.addColumn('number', 'Euro');
 
-    var times = {
-      "01" : 0, '02' : 0, '03' : 0, '04' : 0, '05' : 0, '06' : 0,
-      '07' : 0, '08' : 0, '09' : 0, '10' : 0, '11' : 0, '12' : 0,
-      '13' : 0, '14' : 0, '15' : 0, '16' : 0, '17' : 0, '18' : 0,
-      '19' : 0, '20' : 0, '21' : 0, '22' : 0, '23' : 0, '00' : 0,
-    };
-
+    var times = [];
     data = APP.data['all']
     $.each(data, function(index, value) {
       time = value.time.split(' ');
       time = time[1].split(':');
       hour = time[0];
-      times[hour] += value.qte * value.prix;
+      if (times[hour] == undefined) {
+        times[hour] = value.qte * value.prix;
+      } else {
+        times[hour] += value.qte * value.prix;
+      }
     });
 
-    $.each(wtfJavascript(times).sort(), function(index, value) {
-      gdata.addRow([value[0]+"h", Math.floor(value[1])])
+    Tools.bySortedKeys(times, function(index, key, value) {
+      gdata.addRow([key+"h", Math.floor(value)]);
     });
 
-    var options = { 
-                    'width'           : '100%', 
+    var options = { 'width'           : '100%', 
                     'height'          : '500', 
-                    'backgroundColor' : { fill:'transparent' } 
-                  };
+                    'backgroundColor' : { fill:'transparent' }};
 
     var chart = new google.visualization.AreaChart($('#depense_horraire')[0]); 
     chart.draw(gdata, options);
 
   }
 
-}
+};
 
-function wtfJavascript(obj) {
-    var keys = [];
-    for(var key in obj)
-    {
-        if(obj.hasOwnProperty(key))
-        {
-            keys.push([key, obj[key]]);
-        }
-    }
-    return keys;
-}
+var Tools = {
+
+  bySortedValues: function(obj, callback, context) {
+    Tools.sort(obj, callback, function(a, b) { 
+      return a[1] < b[1] ? 1 : a[1] > b[1] ? -1 : 0 
+    }, context);
+  },
+
+  bySortedKeys: function(obj, callback, context) {
+    Tools.sort(obj, callback, function(a, b) { 
+      return a[0] > b[0] ? 1 : a[0] < b[0] ? -1 : 0
+    }, context);
+  },
+
+  sort: function(obj, callback, sortFunction, context) {
+    var tuples = [];
+    for (var key in obj) tuples.push([key, obj[key]]);
+    tuples.sort(sortFunction);
+    var index = 0;
+    while (index < tuples.length) {
+      if(callback.call(context, index, tuples[index][0], tuples[index][1])) {
+        return true;
+      }
+      index++;
+    }  
+  }
+
+};
