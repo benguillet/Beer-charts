@@ -5,16 +5,30 @@ $(window).ready(function () {
 var APP = {
 
   cookie : null,
-  data   : [],
+  data   : {'monthy': null, 
+            'all'   : null},
 
   init : function() {
+
+    /**
+     * We first need to load the monthy balance
+     * to get all the months url. Once this is done
+     * we can safely load the month data and display
+     * all the other charts. 
+     */
     APP.initlistener();
     APP.loadMonthlyBalance(function() {
-      APP.loadMonth(APP.data['monthly']);
+      APP.loadMonth(APP.data['monthly'], function() {
+        VIEW.drawRest();
+      });
     });
   },
 
   initlistener: function() {
+
+    /**
+     * Buttons toggle mechanism
+     */
     $('#rechargements-btn').click(function() {
       VIEW.drawMonthlyBalance('rechargements');
       $(this).addClass('btn-success');
@@ -26,6 +40,7 @@ var APP = {
       $(this).addClass('btn-success');
       $('#rechargements-btn').removeClass('btn-success');
     });
+
   },
 
   loadMonthlyBalance: function(callback) {
@@ -38,11 +53,11 @@ var APP = {
     );
   },
 
-  loadMonth: function(data) {
+  loadMonth: function(data, callback) {
     $.post("/get/all", { cookie: APP.cookie, data: data})
       .done(function(data) {
         APP.data['all'] = JSON.parse(data);
-        VIEW.drawAllMonth();
+        callback();
       }
     );
   },
@@ -72,7 +87,7 @@ var VIEW = {
 
   },
 
-  drawAllMonth: function () {
+  drawRest: function () {
     VIEW.drawDepenseHorraire();
     VIEW.drawTopConsommation();
     VIEW.drawTopBarman();
