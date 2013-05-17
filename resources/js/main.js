@@ -105,10 +105,10 @@ var VIEW = {
     }); 
 
     $('#top_barman').empty();
-    $('#top_barman').append('<h4>Top 15 barmans</h4><br/>')
+    $('#top_barman').append('<h4>Tu as été servi par : </h4><br/>')
     Tools.bySortedValues(barmans, function(index, key, value) {
       $('#top_barman').append('<h5>('+value+') '+key+'</h5>')
-      if (index >= 14) return true;
+      //if (index >= 14) return true;
     });
   },
 
@@ -124,10 +124,10 @@ var VIEW = {
     });
 
     $('#top_conso').empty();
-    $('#top_conso').append('<h4>Top 15 consommables</h4><br/>')
+    $('#top_conso').append('<h4>Tu as commandé : </h4><br/>')
     Tools.bySortedValues(conso, function(index, key, value) {
       $('#top_conso').append('<h5>('+value+') '+key+'</h5>')
-      if (index >= 14) return true;
+      //if (index >= 14) return true;
     });
   },
 
