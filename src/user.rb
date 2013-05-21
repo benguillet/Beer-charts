@@ -66,13 +66,15 @@ class User
       res  = http.get(url, @headers) 
       doc  = Nokogiri::HTML(res.body)
       doc.xpath('//table[1]/tr[position()>1]').each do |node|
-        data << { "month"   => month,
-                  "time"    => node.children[2].content,
-                  "name"    => node.children[4].content,
-                  "lieu"    => node.children[6].content,
-                  "vendeur" => node.children[8].content,
-                  "qte"     => node.children[12].content,
-                  "prix"    => node.children[14].content }
+        if node.children[10].content.include? 'BDF'
+          data << { "month"   => month,
+                    "time"    => node.children[2].content,
+                    "name"    => node.children[4].content,
+                    "lieu"    => node.children[6].content,
+                    "vendeur" => node.children[8].content,
+                    "qte"     => node.children[12].content,
+                    "prix"    => node.children[14].content }
+        end
       end
     end
     return data
