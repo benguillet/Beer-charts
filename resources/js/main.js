@@ -150,8 +150,17 @@ var VIEW = {
       }
     });
 
+    // Quick & dirty fix to see night better.
     Tools.bySortedKeys(times, function(index, key, value) {
-      gdata.addRow([key+"h", Math.floor(value)]);
+      if (key > 9) {
+        gdata.addRow([key+"h", Math.floor(value)]);
+      }
+    });
+
+    Tools.bySortedKeys(times, function(index, key, value) {
+      if (key <= 9) {
+        gdata.addRow([key+"h", Math.floor(value)]);
+      }
     });
 
     var options = { 'width'           : '100%', 
