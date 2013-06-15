@@ -117,7 +117,7 @@ var VIEW = {
     data = APP.data['all'];
     $.each(data, function(index, value) {
       if (conso[value.name] == undefined) {
-        conso[value.name] = 1;
+        conso[value.name] = parseInt(value.qte);
       } else {
         conso[value.name] += parseInt(value.qte);
       }
