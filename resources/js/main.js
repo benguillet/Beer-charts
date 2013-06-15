@@ -18,6 +18,7 @@ var APP = {
      */
     APP.initlistener();
     APP.loadMonthlyBalance(function() {
+      VIEW.drawMonthlyBalance('depenses');
       APP.loadMonth(APP.data['monthly'], function() {
         VIEW.drawRest();
       });
@@ -47,7 +48,6 @@ var APP = {
     $.post("/get/montly", { cookie: APP.cookie })
       .done(function(data) {
         APP.data['monthly'] = JSON.parse(data).reverse();
-        VIEW.drawMonthlyBalance('depenses');
         callback();
       }
     );
@@ -117,7 +117,7 @@ var VIEW = {
     data = APP.data['all'];
     $.each(data, function(index, value) {
       if (conso[value.name] == undefined) {
-        conso[value.name] = 1;
+        conso[value.name] = parseInt(value.qte);
       } else {
         conso[value.name] += parseInt(value.qte);
       }
