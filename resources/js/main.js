@@ -87,8 +87,8 @@ var VIEW = {
                     'height'          : '500', 
                     'backgroundColor' : { fill:'transparent' }};
 
-    $("#depenses-btn").text($("#depenses-btn").text() + " ( " + totaldepense + "€ )");
-    $("#rechargements-btn").text( $("#rechargements-btn").text() + " ( " + totalrechargement + "€ )");
+    $("#depenses-btn").text("Dépenses mensuel ( " + totaldepense + "€ )");
+    $("#rechargements-btn").text("Rechargements mensuel ( " + totalrechargement + "€ )");
 
     var chart = new google.visualization.AreaChart($('#monthly_balance')[0]); 
     chart.draw(gdata, options);
