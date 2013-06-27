@@ -67,6 +67,8 @@ var APP = {
 var VIEW = {
 
   drawMonthlyBalance: function(type) {
+    var totaldepense = 0;
+    var totalrechargement = 0;
 
     var gdata = new google.visualization.DataTable();   
     gdata.addColumn('string', 'Date');
@@ -75,12 +77,18 @@ var VIEW = {
     data = APP.data['monthly']
     $.each(data, function(index, value) {
       var aux = type == 'depenses' ? value.out : value.in;
+      totaldepense += parseFloat(value.out);
+      totalrechargement += parseFloat(value.in);
+
       gdata.addRow([value.date, parseInt(aux)])
     });
 
     var options = { 'width'           : '100%', 
                     'height'          : '500', 
                     'backgroundColor' : { fill:'transparent' }};
+
+    $("#depenses-btn").text($("#depenses-btn").text() + " ( " + totaldepense + "€ )");
+    $("#rechargements-btn").text( $("#rechargements-btn").text() + " ( " + totalrechargement + "€ )");
 
     var chart = new google.visualization.AreaChart($('#monthly_balance')[0]); 
     chart.draw(gdata, options);
