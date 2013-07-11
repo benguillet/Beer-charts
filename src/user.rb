@@ -1,5 +1,6 @@
 require 'net/http'
 require 'nokogiri'
+require 'active_support/core_ext'
 
 class User
 
@@ -9,13 +10,13 @@ class User
     connection!
   end
 
-  def self.initByCookie cookie
+  def self.initByCookie(cookie)
     user = User.new(nil, nil)
     user.setCookie(cookie)
     return user
   end
 
-  def setCookie cookie
+  def setCookie(cookie)
     @headers = { 'Cookie' => cookie }
   end
 
@@ -24,17 +25,17 @@ class User
     # Load config
     urls = Tools::load_config('url')
     form = Tools::load_config('form')
-    
+
     # Connection Request
     http = Net::HTTP.new(urls['base'], 80)
-    data = Tools::parameterize({ 
+    data = {
       'username'   => @login,
       'password'   => @password,
-      'domain'     => form['domain'], 
+      'domain'     => form['domain'],
       'connectbtn' => form['btn']
-    })
+    }.to_query
     res  = http.post(urls['connect'], data)
-    
+
     # Save the cookies
     @headers = {
       'Cookie' => res.to_hash['set-cookie'].collect{
@@ -60,10 +61,10 @@ class User
     urls  = Tools::load_config('url')
     http = Net::HTTP.new(urls['base'], 80)
 
-    data = Array.new 
+    data = Array.new
     months.each do |month|
       url  = urls['month'] + month.split("/").reverse().join("")
-      res  = http.get(url, @headers) 
+      res  = http.get(url, @headers)
       doc  = Nokogiri::HTML(res.body)
       doc.xpath('//table[1]/tr[position()>1]').each do |node|
         if node.children[10].content.include? 'BDF'
@@ -83,8 +84,8 @@ class User
   def getMonthlyBalance
     urls  = Tools::load_config('url')
     http = Net::HTTP.new(urls['base'], 80)
-    res  = http.get(urls['compte'], @headers) 
-    data = Array.new 
+    res  = http.get(urls['compte'], @headers)
+    data = Array.new
     doc  = Nokogiri::HTML(res.body)
 
     doc.xpath('//table[1]/tr[position()>1]').each do |node|
@@ -94,5 +95,5 @@ class User
     end
     return data
   end
-  
+
 end
