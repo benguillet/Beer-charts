@@ -5,7 +5,7 @@ $(window).ready(function () {
 var APP = {
 
   cookie : null,
-  data   : {'monthy': null, 
+  data   : {'monthy': null,
             'all'   : null},
 
   init : function() {
@@ -14,7 +14,7 @@ var APP = {
      * We first need to load the monthy balance
      * to get all the months url. Once this is done
      * we can safely load the month data and display
-     * all the other charts. 
+     * all the other charts.
      */
     APP.initlistener();
     APP.loadMonthlyBalance(function() {
@@ -70,7 +70,7 @@ var VIEW = {
     var totaldepense = 0;
     var totalrechargement = 0;
 
-    var gdata = new google.visualization.DataTable();   
+    var gdata = new google.visualization.DataTable();
     gdata.addColumn('string', 'Date');
     gdata.addColumn('number', 'Euro');
 
@@ -83,14 +83,14 @@ var VIEW = {
       gdata.addRow([value.date, parseInt(aux)])
     });
 
-    var options = { 'width'           : '100%', 
-                    'height'          : '500', 
+    var options = { 'width'           : '100%',
+                    'height'          : '500',
                     'backgroundColor' : { fill:'transparent' }};
 
-    $("#depenses-btn").text("Dépenses mensuel ( " + totaldepense + "€ )");
-    $("#rechargements-btn").text("Rechargements mensuel ( " + totalrechargement + "€ )");
+    $("#depenses-btn").text("Dépenses mensuelles ( " + totaldepense + "€ )");
+    $("#rechargements-btn").text("Rechargements mensuels ( " + totalrechargement + "€ )");
 
-    var chart = new google.visualization.AreaChart($('#monthly_balance')[0]); 
+    var chart = new google.visualization.AreaChart($('#monthly_balance')[0]);
     chart.draw(gdata, options);
 
   },
@@ -110,7 +110,7 @@ var VIEW = {
       } else {
         barmans[value.vendeur] += 1;
       }
-    }); 
+    });
 
     $('#top_barman').empty();
     $('#top_barman').append('<h4>Tu as été servi par : </h4><br/>')
@@ -141,7 +141,7 @@ var VIEW = {
 
   drawDepenseHorraire: function() {
 
-    var gdata = new google.visualization.DataTable();   
+    var gdata = new google.visualization.DataTable();
     gdata.addColumn('string', 'Date');
     gdata.addColumn('number', 'Euro');
 
@@ -171,11 +171,11 @@ var VIEW = {
       }
     });
 
-    var options = { 'width'           : '100%', 
-                    'height'          : '500', 
+    var options = { 'width'           : '100%',
+                    'height'          : '500',
                     'backgroundColor' : { fill:'transparent' }};
 
-    var chart = new google.visualization.AreaChart($('#depense_horraire')[0]); 
+    var chart = new google.visualization.AreaChart($('#depense_horraire')[0]);
     chart.draw(gdata, options);
 
   }
@@ -185,13 +185,13 @@ var VIEW = {
 var Tools = {
 
   bySortedValues: function(obj, callback, context) {
-    Tools.sort(obj, callback, function(a, b) { 
-      return a[1] < b[1] ? 1 : a[1] > b[1] ? -1 : 0 
+    Tools.sort(obj, callback, function(a, b) {
+      return a[1] < b[1] ? 1 : a[1] > b[1] ? -1 : 0
     }, context);
   },
 
   bySortedKeys: function(obj, callback, context) {
-    Tools.sort(obj, callback, function(a, b) { 
+    Tools.sort(obj, callback, function(a, b) {
       return a[0] > b[0] ? 1 : a[0] < b[0] ? -1 : 0
     }, context);
   },
@@ -206,7 +206,7 @@ var Tools = {
         return true;
       }
       index++;
-    }  
+    }
   }
 
 };
